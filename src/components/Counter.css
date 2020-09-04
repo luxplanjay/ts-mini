@@ -1,0 +1,22 @@
+.Counter {
+  width: 400px;
+  padding: 10px;
+  text-align: center;
+}
+
+.Counter__controls > button {
+  font-weight: 500;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.Counter__value {
+  margin-right: 15px;
+  margin-left: 15px;
+  font-size: 64px;
+  font-family: monospace;
+  text-align: center;
+}
