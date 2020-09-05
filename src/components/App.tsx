@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import Counter from './Counter';
 import CounterFn from './CounterFn';
-import ColorPicker from './ColorPicker.jsx';
-import Form from './Form.jsx';
+import ColorPicker from './ColorPicker';
+import Form from './Form';
 import TodosView from './Todos/TodosView';
 
 const colorPickerOptions = [
@@ -48,7 +48,7 @@ const App = () => (
         <ColorPicker options={colorPickerOptions} />
       </Route>
       <Route path="/form">
-        <Form />
+        <Form onSubmit={cred => console.log(cred)} />
       </Route>
       <Route path="/sync-todos">
         <TodosView />

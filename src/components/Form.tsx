@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from 'react';
 
-export default function Form() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+interface Props {
+  onSubmit: (cred: { email: string; password: string }) => void;
+}
 
-  const onChange = (evt) => {
+export default function Form({ onSubmit }: Props) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.currentTarget;
 
     switch (name) {
-      case Fields.Email:
+      case 'email':
         setEmail(value);
         break;
 
-      case Fields.Password:
+      case 'password':
         setPassword(value);
         break;
 
@@ -21,12 +25,14 @@ export default function Form() {
     }
   };
 
-  const onSubmit = (evt) => {
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    onSubmit({ email, password });
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <label>
         Почта
         <input type="mail" name="email" onChange={onChange} value={email} />

@@ -1,21 +1,29 @@
-import React, { Component } from "react";
-import "./TodoEdutor.css";
+import React, { Component } from 'react';
+import './TodoEdutor.css';
 
-class TodoEditor extends Component {
+interface Props {
+  onSubmit: (message: string) => void;
+}
+
+interface State {
+  message: string;
+}
+
+class TodoEditor extends Component<Props, State> {
   state = {
-    message: "",
+    message: '',
   };
 
-  handleChange = (e) => {
+  handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     this.setState({ message: e.currentTarget.value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     this.props.onSubmit(this.state.message);
 
-    this.setState({ message: "" });
+    this.setState({ message: '' });
   };
 
   render() {

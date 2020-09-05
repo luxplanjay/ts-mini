@@ -1,7 +1,16 @@
-import React, { Component } from "react";
-import "./Counter.css";
+import React, { Component } from 'react';
+import './Counter.css';
 
-export default class Counter extends Component {
+interface Props {
+  initialValue: number;
+  step: number;
+}
+
+interface State {
+  value: number;
+}
+
+export default class Counter extends Component<Props, State> {
   static defaultProps = {
     initialValue: 0,
     step: 1,

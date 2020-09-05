@@ -1,7 +1,12 @@
 import React from 'react';
 import './Filter.css';
 
-const Filter = ({ value, onChange }) => (
+interface Props {
+  value: string;
+  onChange: (filter: string) => void;
+}
+
+const Filter = ({ value, onChange }: Props) => (
   <div className="Filter">
     <p className="Filter__label">Фильтр по содержимому</p>
     <input

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import shortid from 'shortid';
 import TodoList from './TodoList';
 import TodoEditor from './TodoEditor';
 import Filter from './Filter';
 import Stats from './Stats';
-import initialTodos from './todos.json';
+// import initialTodos from './todos.json';
+import ITodo from '../../interfaces/Todo.interface';
 
 const barStyles = {
   display: 'flex',
@@ -12,11 +13,21 @@ const barStyles = {
   marginBottom: 20,
 };
 
+const getInitialTodoState = () => {
+  const savedTodos = localStorage.getItem('todos');
+
+  return savedTodos ? JSON.parse(savedTodos) : [];
+};
+
 const TodosView = () => {
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState<ITodo[]>(getInitialTodoState);
   const [filter, setFilter] = useState('');
 
-  const addTodo = text => {
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
+
+  const addTodo = (text: string) => {
     const todo = {
       id: shortid.generate(),
       text,
@@ -26,11 +37,11 @@ const TodosView = () => {
     setTodos(todos => [todo, ...todos]);
   };
 
-  const deleteTodo = todoId => {
+  const deleteTodo = (todoId: string) => {
     setTodos(todos => todos.filter(todo => todo.id !== todoId));
   };
 
-  const toggleCompleted = todoId => {
+  const toggleCompleted = (todoId: string) => {
     setTodos(todos =>
       todos.map(todo =>
         todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
@@ -38,27 +49,24 @@ const TodosView = () => {
     );
   };
 
-  const changeFilter = filter => {
+  const changeFilter = (filter: string) => {
     setFilter(filter);
   };
 
-  const getVisibleTodos = () => {
+  const visibleTodos = useMemo(() => {
     const normalizedFilter = filter.toLowerCase();
 
     return todos.filter(todo =>
       todo.text.toLowerCase().includes(normalizedFilter),
     );
-  };
+  }, [filter, todos]);
 
-  const calculateCompletedTodos = () => {
+  const completedTodoCount = useMemo(() => {
     return todos.reduce(
       (total, todo) => (todo.completed ? total + 1 : total),
       0,
     );
-  };
-
-  const completedTodoCount = calculateCompletedTodos();
-  const visibleTodos = getVisibleTodos();
+  }, [todos]);
 
   return (
     <>

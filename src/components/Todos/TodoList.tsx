@@ -1,8 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
+import ITodo from '../../interfaces/Todo.interface';
 import './TodoList.css';
 
-const TodoList = ({ todos, onDeleteTodo, onToggleCompleted }) => (
+interface Props {
+  todos: ITodo[];
+  onDeleteTodo: (todoId: string) => void;
+  onToggleCompleted: (todoId: string) => void;
+}
+
+const TodoList = ({ todos, onDeleteTodo, onToggleCompleted }: Props) => (
   <ul className="TodoList">
     {todos.map(({ id, text, completed }) => (
       <li

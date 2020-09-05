@@ -1,7 +1,12 @@
 import React from 'react';
 import './Stats.css';
 
-const Stats = ({ total, completed }) => (
+interface Props {
+  total: number;
+  completed: number;
+}
+
+const Stats = ({ total, completed }: Props) => (
   <div className="Stats">
     <p className="Stats__item">
       <span className="Stats__value">{total}</span>
